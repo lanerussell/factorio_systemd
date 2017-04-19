@@ -1,0 +1,19 @@
+[Unit]
+Description=Factorio Server %i
+
+[Service]
+WorkingDirectory=/opt/factorio/%i
+User=factorio
+Group=factorio
+Restart=always
+RemainAfterExit=yes
+
+ExecStart=/usr/bin/tmux new-session -d -c /opt/factorio/%i -s factorio-%i -n factorio-%i "/opt/factorio/%i/bin/x64/factorio --start-server-load-latest --server-settings /opt/factorio/%i/data/server-settings.json"
+
+ExecStop=/usr/bin/tmux send-keys -t factorio-%i 'SERVER SHUTTING DOWN. Saving map...' 'C-m'
+ExecStop=/bin/sleep 5
+ExecStop=/usr/bin/tmux send-keys -t factorio-%i 'C-c'
+ExecStop=/bin/sleep 5
+
+[Install]
+WantedBy=multi-user.target
