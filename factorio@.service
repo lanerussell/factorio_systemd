@@ -6,6 +6,8 @@ WorkingDirectory=/opt/factorio/%i
 User=factorio
 Group=factorio
 Restart=always
+StartLimitIntervalSec=600
+StartLimitBurst=5
 RemainAfterExit=yes
 
 ExecStart=/usr/bin/tmux new-session -d -c /opt/factorio/%i -s factorio-%i -n factorio-%i "/opt/factorio/%i/bin/x64/factorio --start-server-load-latest --server-settings /opt/factorio/%i/data/server-settings.json"
